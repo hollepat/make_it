@@ -24,7 +24,7 @@ services:
   # Spring Boot Backend
   backend:
     build:
-      context: ./make_it
+      context: ./backend
       dockerfile: Dockerfile
     container_name: makeit-backend
     environment:

@@ -69,19 +69,23 @@ make_it/
 │   ├── src/
 │   │   ├── main/
 │   │   │   ├── kotlin/
-│   │   │   │   └── com/makeit/
+│   │   │   │   └── org/make_it/backend/
 │   │   │   │       ├── controller/    # REST endpoints
 │   │   │   │       ├── service/       # Business logic
 │   │   │   │       ├── repository/    # Data access
 │   │   │   │       ├── model/         # Domain entities
-│   │   │   │       └── dto/           # Data transfer objects
+│   │   │   │       ├── dto/           # Data transfer objects
+│   │   │   │       ├── exception/     # Custom exceptions
+│   │   │   │       └── config/        # Configuration classes
 │   │   │   └── resources/
 │   │   │       ├── application.yml
 │   │   │       └── db/changelog/      # Liquibase changelogs
-│   │   │           └── db.changelog-master.yaml
+│   │   │           ├── changelog-master.yaml
+│   │   │           └── changes/       # Version-specific changes
 │   │   └── test/
 │   ├── build.gradle.kts
-│   └── Dockerfile
+│   ├── Dockerfile
+│   └── db.md                # Database documentation
 ├── frontend/                # React PWA
 │   ├── src/
 │   │   ├── components/      # React components
