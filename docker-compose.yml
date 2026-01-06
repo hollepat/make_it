@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: makeit-postgres
+    environment:
+      POSTGRES_DB: makeit_db
+      POSTGRES_USER: makeit
+      POSTGRES_PASSWORD: makeit_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - makeit-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U makeit -d makeit_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Spring Boot Backend
+  backend:
+    build:
+      context: ./make_it
+      dockerfile: Dockerfile
+    container_name: makeit-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/makeit_db
+      SPRING_DATASOURCE_USERNAME: makeit
+      SPRING_DATASOURCE_PASSWORD: makeit_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      APP_CORS_ALLOWED_ORIGINS: http://localhost:3000,http://localhost:5173,http://frontend:80
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - makeit-network
+    restart: unless-stopped
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8080/api
+    container_name: makeit-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - makeit-network
+    restart: unless-stopped
+
+networks:
+  makeit-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

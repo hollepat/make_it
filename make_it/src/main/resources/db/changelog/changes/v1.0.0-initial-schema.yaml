@@ -1,0 +1,118 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: makeit
+      comment: Create programs table
+      changes:
+        - createTable:
+            tableName: programs
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: goal
+                  type: text
+              - column:
+                  name: start_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: period_type
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: period_length
+                  type: integer
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+  - changeSet:
+      id: 2
+      author: makeit
+      comment: Create sessions table
+      changes:
+        - createTable:
+            tableName: sessions
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: program_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: scheduled_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: completed
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: completed_at
+                  type: timestamp
+              - column:
+                  name: notes
+                  type: text
+              - column:
+                  name: duration_minutes
+                  type: integer
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+        - addForeignKeyConstraint:
+            baseTableName: sessions
+            baseColumnNames: program_id
+            referencedTableName: programs
+            referencedColumnNames: id
+            constraintName: fk_sessions_program
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 3
+      author: makeit
+      comment: Create index on sessions for faster queries
+      changes:
+        - createIndex:
+            tableName: sessions
+            indexName: idx_sessions_program_id
+            columns:
+              - column:
+                  name: program_id
+        - createIndex:
+            tableName: sessions
+            indexName: idx_sessions_scheduled_date
+            columns:
+              - column:
+                  name: scheduled_date
+        - createIndex:
+            tableName: sessions
+            indexName: idx_sessions_completed
+            columns:
+              - column:
+                  name: completed
