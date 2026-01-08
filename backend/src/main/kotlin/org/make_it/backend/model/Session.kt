@@ -9,7 +9,8 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 /**
- * Entity representing a training session within a program.
+ * Entity representing a training session.
+ * Sessions can be standalone or optionally associated with a program.
  * Sessions can be of various types (run, boulder, gym, etc.) and can be
  * scheduled for a specific date with optional completion tracking.
  */
@@ -19,8 +20,8 @@ class Session(
     @Id
     val id: UUID = UUID.randomUUID(),
 
-    @Column(name = "program_id", nullable = false)
-    val programId: UUID,
+    @Column(name = "program_id", nullable = true)
+    val programId: UUID? = null,
 
     @Column(nullable = false, length = 50)
     var type: String,

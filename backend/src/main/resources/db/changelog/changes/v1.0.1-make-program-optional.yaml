@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: makeit
+      comment: Make program_id optional for standalone sessions (MVP)
+      changes:
+        # Drop the foreign key constraint
+        - dropForeignKeyConstraint:
+            baseTableName: sessions
+            constraintName: fk_sessions_program
+
+        # Make program_id nullable
+        - dropNotNullConstraint:
+            tableName: sessions
+            columnName: program_id
+            columnDataType: uuid

@@ -13,8 +13,7 @@ import java.util.UUID
  * Request DTO for creating a new session.
  */
 data class CreateSessionRequest(
-    @field:NotNull(message = "Program ID is required")
-    val programId: UUID,
+    val programId: UUID? = null,
 
     @field:NotBlank(message = "Session type is required")
     @field:Size(max = 50, message = "Session type must not exceed 50 characters")
@@ -52,7 +51,7 @@ data class UpdateSessionRequest(
  */
 data class SessionResponse(
     val id: UUID,
-    val programId: UUID,
+    val programId: UUID?,
     val type: String,
     val scheduledDate: LocalDate,
     val completed: Boolean,

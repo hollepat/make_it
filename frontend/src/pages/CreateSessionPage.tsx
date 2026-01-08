@@ -4,7 +4,6 @@ import { useSession } from '../context/SessionContext';
 import {
   SESSION_TYPES,
   DURATION_PRESETS,
-  DEFAULT_PROGRAM_ID,
   type SessionType,
 } from '../utils/sessionUtils';
 import {
@@ -51,7 +50,6 @@ export default function CreateSessionPage() {
         const scheduledDate = toISOString(parseInputDate(date), time || undefined);
 
         await createSession({
-          programId: DEFAULT_PROGRAM_ID,
           type: sessionType,
           scheduledDate,
           notes: notes.trim() || undefined,

@@ -1,6 +1,6 @@
 export interface Session {
   id: string;
-  programId: string;
+  programId: string | null;
   type: string;
   scheduledDate: string; // ISO date string
   completed: boolean;
@@ -11,7 +11,7 @@ export interface Session {
 }
 
 export interface CreateSessionRequest {
-  programId: string;
+  programId?: string | null;
   type: string;
   scheduledDate: string;
   notes?: string;
