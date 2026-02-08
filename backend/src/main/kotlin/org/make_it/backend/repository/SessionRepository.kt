@@ -16,6 +16,11 @@ import java.util.UUID
 interface SessionRepository : JpaRepository<Session, UUID> {
 
     /**
+     * Find all sessions for a specific user ordered by scheduled date.
+     */
+    fun findByUserIdOrderByScheduledDateAsc(userId: UUID): List<Session>
+
+    /**
      * Find all sessions for a specific program.
      */
     fun findByProgramIdOrderByScheduledDateAsc(programId: UUID): List<Session>
@@ -41,6 +46,23 @@ interface SessionRepository : JpaRepository<Session, UUID> {
         ORDER BY s.scheduledDate ASC
     """)
     fun findUpcomingIncomplete(
+        @Param("startDate") startDate: LocalDate,
+        @Param("endDate") endDate: LocalDate
+    ): List<Session>
+
+    /**
+     * Find upcoming incomplete sessions for a specific user.
+     */
+    @Query("""
+        SELECT s FROM Session s
+        WHERE s.user.id = :userId
+        AND s.scheduledDate >= :startDate
+        AND s.scheduledDate <= :endDate
+        AND s.completed = false
+        ORDER BY s.scheduledDate ASC
+    """)
+    fun findUpcomingIncompleteByUserId(
+        @Param("userId") userId: UUID,
         @Param("startDate") startDate: LocalDate,
         @Param("endDate") endDate: LocalDate
     ): List<Session>

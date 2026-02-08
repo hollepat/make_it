@@ -23,3 +23,10 @@ server:
 app:
   cors:
     allowed-origins: http://localhost:5173,http://localhost:3000
+  jwt:
+    secret: ${JWT_SECRET:dev-secret-key-change-in-production-must-be-32-chars}
+    access-token-expiration: 900000  # 15 minutes in milliseconds
+    refresh-token-expiration: 604800000  # 7 days in milliseconds
+  invite:
+    bootstrap-code: ${BOOTSTRAP_INVITE_CODE:}
+    code-expiration-days: 7

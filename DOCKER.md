@@ -14,7 +14,7 @@ This guide explains how to run the MakeIt application using Docker.
 From the project root directory:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 This will:
@@ -32,22 +32,22 @@ This will:
 
 ```bash
 # All services
-docker-compose logs -f
+docker compose logs -f
 
 # Specific service
-docker-compose logs -f backend
-docker-compose logs -f frontend
-docker-compose logs -f postgres
+docker compose logs -f backend
+docker compose logs -f frontend
+docker compose logs -f postgres
 ```
 
 ### 4. Stop Services
 
 ```bash
 # Stop but keep data
-docker-compose down
+docker compose down
 
 # Stop and remove all data (WARNING: deletes database)
-docker-compose down -v
+docker compose down -v
 ```
 
 ## Development Workflow
@@ -56,17 +56,17 @@ docker-compose down -v
 
 **Backend changes:**
 ```bash
-docker-compose up -d --build backend
+docker compose up -d --build backend
 ```
 
 **Frontend changes:**
 ```bash
-docker-compose up -d --build frontend
+docker compose up -d --build frontend
 ```
 
 **Rebuild everything:**
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 ### Access Database

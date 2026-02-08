@@ -2,7 +2,10 @@ package org.make_it.backend.model
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -19,6 +22,10 @@ import java.util.UUID
 class Session(
     @Id
     val id: UUID = UUID.randomUUID(),
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = true)
+    var user: User? = null,
 
     @Column(name = "program_id", nullable = true)
     val programId: UUID? = null,
@@ -63,6 +70,6 @@ class Session(
     override fun hashCode(): Int = id.hashCode()
 
     override fun toString(): String {
-        return "Session(id=$id, programId=$programId, type='$type', scheduledDate=$scheduledDate, completed=$completed)"
+        return "Session(id=$id, userId=${user?.id}, programId=$programId, type='$type', scheduledDate=$scheduledDate, completed=$completed)"
     }
 }

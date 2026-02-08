@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 8
+      author: makeit
+      comment: Add user_id column to sessions table for data isolation
+      changes:
+        - addColumn:
+            tableName: sessions
+            columns:
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: 9
+      author: makeit
+      comment: Add foreign key and index for sessions.user_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: sessions
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_sessions_user
+            onDelete: CASCADE
+        - createIndex:
+            tableName: sessions
+            indexName: idx_sessions_user_id
+            columns:
+              - column:
+                  name: user_id
