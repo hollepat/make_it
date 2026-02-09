@@ -28,5 +28,6 @@ app:
     access-token-expiration: 900000  # 15 minutes in milliseconds
     refresh-token-expiration: 604800000  # 7 days in milliseconds
   invite:
-    bootstrap-code: ${BOOTSTRAP_INVITE_CODE:}
+    required: ${INVITE_CODE_REQUIRED:true}  # Set to false to disable invite code requirement
+    bootstrap-code: ${BOOTSTRAP_INVITE_CODE:my-secret-code}
     code-expiration-days: 7

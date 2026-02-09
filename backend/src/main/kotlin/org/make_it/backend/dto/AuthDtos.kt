@@ -25,8 +25,7 @@ data class RegisterRequest(
     @field:Size(min = 1, max = 100, message = "Display name must be between 1 and 100 characters")
     val displayName: String,
 
-    @field:NotBlank(message = "Invite code is required")
-    val inviteCode: String
+    val inviteCode: String? = null
 )
 
 /**

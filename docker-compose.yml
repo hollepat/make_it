@@ -34,6 +34,7 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       APP_CORS_ALLOWED_ORIGINS: http://localhost:3000,http://localhost:5173,http://frontend:80
       JWT_SECRET: change-me-in-production-this-must-be-at-least-32-characters-long
+      INVITE_CODE_REQUIRED: ${INVITE_CODE_REQUIRED:-true}
       BOOTSTRAP_INVITE_CODE: ${BOOTSTRAP_INVITE_CODE:-make-it-first-user}
     ports:
       - "8080:8080"
@@ -51,6 +52,7 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_API_URL: http://localhost:8080/api
+        VITE_INVITE_CODE_REQUIRED: ${VITE_INVITE_CODE_REQUIRED:-true}
     container_name: makeit-frontend
     ports:
       - "3000:80"

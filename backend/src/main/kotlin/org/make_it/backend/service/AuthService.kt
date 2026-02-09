@@ -57,7 +57,7 @@ class AuthService(
     @Transactional
     fun register(request: RegisterRequest): AuthResponse {
         val email = request.email.lowercase().trim()
-        val inviteCode = request.inviteCode.trim()
+        val inviteCode = request.inviteCode?.trim()
 
         logger.info("Processing registration for email: {}", email)
 
@@ -67,8 +67,17 @@ class AuthService(
             throw EmailAlreadyExistsException(email)
         }
 
-        // Validate invite code (bootstrap code or database invite)
-        val dbInviteCode = validateAndGetInviteCode(inviteCode)
+        // Validate invite code if required
+        val dbInviteCode = if (inviteProperties.required) {
+            if (inviteCode.isNullOrBlank()) {
+                logger.warn("Registration failed: invite code is required but not provided")
+                throw InvalidInviteCodeException("Invite code is required")
+            }
+            validateAndGetInviteCode(inviteCode)
+        } else {
+            logger.info("Invite code not required, skipping validation")
+            null
+        }
 
         // Create the new user
         val user = User(

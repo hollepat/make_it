@@ -4,13 +4,15 @@ import { useAuth } from '../context/AuthContext';
 import { inviteApi } from '../services/inviteApi';
 import { AxiosError } from 'axios';
 
+const inviteCodeRequired = import.meta.env.VITE_INVITE_CODE_REQUIRED !== 'false';
+
 export default function RegisterPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { register, isAuthenticated } = useAuth();
 
   // Get invite code from URL query param
-  const codeFromUrl = searchParams.get('code') || '';
+  const codeFromUrl = inviteCodeRequired ? searchParams.get('code') || '' : '';
 
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
@@ -35,6 +37,8 @@ export default function RegisterPage() {
 
   // Validate invite code when it changes (with debounce)
   useEffect(() => {
+    if (!inviteCodeRequired) return;
+
     if (!inviteCode.trim()) {
       setCodeValidation(null);
       return;
@@ -85,14 +89,16 @@ export default function RegisterPage() {
         return;
       }
 
-      if (!inviteCode.trim()) {
-        setError('Please enter an invite code');
-        return;
-      }
+      if (inviteCodeRequired) {
+        if (!inviteCode.trim()) {
+          setError('Please enter an invite code');
+          return;
+        }
 
-      if (codeValidation && !codeValidation.valid) {
-        setError('Please enter a valid invite code');
-        return;
+        if (codeValidation && !codeValidation.valid) {
+          setError('Please enter a valid invite code');
+          return;
+        }
       }
 
       setIsSubmitting(true);
@@ -103,7 +109,7 @@ export default function RegisterPage() {
           displayName: displayName.trim(),
           email: email.trim(),
           password,
-          inviteCode: inviteCode.trim(),
+          ...(inviteCodeRequired && { inviteCode: inviteCode.trim() }),
         });
         navigate('/', { replace: true });
       } catch (err) {
@@ -137,7 +143,7 @@ export default function RegisterPage() {
         <div className="max-w-md mx-auto text-center">
           <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
           <p className="text-sm text-gray-500 mt-1">
-            Join MakeIt with your invite code
+            {inviteCodeRequired ? 'Join MakeIt with your invite code' : 'Join MakeIt'}
           </p>
         </div>
       </div>
@@ -147,6 +153,7 @@ export default function RegisterPage() {
         <div className="w-full max-w-md">
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Invite Code */}
+            {inviteCodeRequired && (
             <div>
               <label
                 htmlFor="inviteCode"
@@ -218,6 +225,7 @@ export default function RegisterPage() {
                 </p>
               )}
             </div>
+            )}
 
             {/* Display Name */}
             <div>

@@ -23,7 +23,7 @@ export interface RegisterRequest {
   email: string;
   password: string;
   displayName: string;
-  inviteCode: string;
+  inviteCode?: string;
 }
 
 export interface InviteCode {
