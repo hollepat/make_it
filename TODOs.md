@@ -2,7 +2,7 @@
 
 Here I will write my ideas and comments for improvement.
 
-- [ ] Add option to delete session
+- [x] Add option to delete session
 - [ ] Focus back on the programs - the programs shoudl have some goal and tag. the specific sessions will be then tagged, which will specify to which program it belongs to.
 - [ ] Adding PersonalAgent to optimize training sessions and long term programs
 - [ ] Add a option to create an event in the calendar view, just like in any other

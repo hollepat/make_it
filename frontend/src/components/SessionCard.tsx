@@ -15,6 +15,7 @@ import {
 interface SessionCardProps {
   session: Session;
   onToggleComplete: (id: string) => void;
+  onDelete?: (id: string) => void;
   showRelativeDate?: boolean;
 }
 
@@ -48,9 +49,27 @@ function CheckCircleIcon({ completed }: { completed: boolean }) {
   );
 }
 
+function TrashIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-4 h-4"
+    >
+      <polyline points="3 6 5 6 21 6" />
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+    </svg>
+  );
+}
+
 const SessionCard = memo(function SessionCard({
   session,
   onToggleComplete,
+  onDelete,
   showRelativeDate = true,
 }: SessionCardProps) {
   const time = formatTime(session.scheduledDate);
@@ -126,6 +145,18 @@ const SessionCard = memo(function SessionCard({
             </p>
           )}
         </div>
+
+        {/* Delete Button */}
+        {onDelete && (
+          <button
+            onClick={() => onDelete(session.id)}
+            className="flex-shrink-0 p-2 -m-1 text-gray-300 hover:text-red-500
+              hover:bg-red-50 rounded-full transition-colors"
+            aria-label={`Delete ${getSessionLabel(session.type)} session`}
+          >
+            <TrashIcon />
+          </button>
+        )}
       </div>
     </div>
   );

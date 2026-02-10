@@ -133,6 +133,10 @@ export const sessionApi = {
     const response = await api.patch<Session>(`/sessions/${id}/complete`);
     return response.data;
   },
+
+  deleteSession: async (id: string): Promise<void> => {
+    await api.delete(`/sessions/${id}`);
+  },
 };
 
 export default api;

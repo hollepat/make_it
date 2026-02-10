@@ -17,6 +17,7 @@ interface SessionContextType {
   refreshSessions: () => Promise<void>;
   createSession: (request: CreateSessionRequest) => Promise<Session>;
   toggleCompletion: (id: string) => Promise<void>;
+  deleteSession: (id: string) => Promise<void>;
   getSessionById: (id: string) => Session | undefined;
   selectedDate: Date | null;
   setSelectedDate: (date: Date | null) => void;
@@ -73,6 +74,16 @@ export function SessionProvider({ children }: SessionProviderProps) {
     }
   }, []);
 
+  const deleteSession = useCallback(async (id: string) => {
+    try {
+      await sessionApi.deleteSession(id);
+      setSessions((prev) => prev.filter((session) => session.id !== id));
+    } catch (err) {
+      console.error('Failed to delete session:', err);
+      throw err;
+    }
+  }, []);
+
   const getSessionById = useCallback(
     (id: string): Session | undefined => {
       return sessions.find((session) => session.id === id);
@@ -88,6 +99,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
       refreshSessions,
       createSession,
       toggleCompletion,
+      deleteSession,
       getSessionById,
       selectedDate,
       setSelectedDate,
@@ -99,6 +111,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
       refreshSessions,
       createSession,
       toggleCompletion,
+      deleteSession,
       getSessionById,
       selectedDate,
     ]

@@ -1,12 +1,15 @@
 import { useMemo, useCallback, useState } from 'react';
 import { useSession } from '../context/SessionContext';
 import SessionCard from '../components/SessionCard';
-import { getUpcomingIncompleteSessions } from '../utils/sessionUtils';
+import ConfirmDialog from '../components/ConfirmDialog';
+import { getUpcomingIncompleteSessions, getSessionLabel } from '../utils/sessionUtils';
 
 export default function UpcomingPage() {
-  const { sessions, loading, error, toggleCompletion, refreshSessions } =
+  const { sessions, loading, error, toggleCompletion, deleteSession, refreshSessions } =
     useSession();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [sessionToDelete, setSessionToDelete] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const upcomingSessions = useMemo(
     () => getUpcomingIncompleteSessions(sessions),
@@ -24,6 +27,27 @@ export default function UpcomingPage() {
     [toggleCompletion]
   );
 
+  const handleDeleteClick = useCallback((id: string) => {
+    setSessionToDelete(id);
+  }, []);
+
+  const handleDeleteConfirm = useCallback(async () => {
+    if (!sessionToDelete) return;
+    setIsDeleting(true);
+    try {
+      await deleteSession(sessionToDelete);
+      setSessionToDelete(null);
+    } catch (err) {
+      console.error('Failed to delete session:', err);
+    } finally {
+      setIsDeleting(false);
+    }
+  }, [sessionToDelete, deleteSession]);
+
+  const handleDeleteCancel = useCallback(() => {
+    setSessionToDelete(null);
+  }, []);
+
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
     try {
@@ -32,6 +56,14 @@ export default function UpcomingPage() {
       setIsRefreshing(false);
     }
   }, [refreshSessions]);
+
+  const deletingSession = sessionToDelete
+    ? sessions.find((s) => s.id === sessionToDelete)
+    : null;
+
+  const deleteMessage = deletingSession
+    ? 'Are you sure you want to delete this ' + getSessionLabel(deletingSession.type).toLowerCase() + ' session? This action cannot be undone.'
+    : 'Are you sure you want to delete this session? This action cannot be undone.';
 
   if (loading && !isRefreshing) {
     return (
@@ -145,12 +177,25 @@ export default function UpcomingPage() {
                 key={session.id}
                 session={session}
                 onToggleComplete={handleToggleComplete}
+                onDelete={handleDeleteClick}
                 showRelativeDate
               />
             ))}
           </div>
         )}
       </div>
+
+      <ConfirmDialog
+        isOpen={sessionToDelete !== null}
+        title="Delete Session"
+        message={deleteMessage}
+        confirmLabel="Delete"
+        cancelLabel="Keep"
+        variant="danger"
+        isLoading={isDeleting}
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+      />
     </div>
   );
 }

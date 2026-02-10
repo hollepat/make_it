@@ -9,7 +9,7 @@ import { getNextMonth, getPreviousMonth } from '../utils/dateUtils';
 
 export default function CalendarPage() {
   const navigate = useNavigate();
-  const { sessions, loading, error, toggleCompletion, setSelectedDate } = useSession();
+  const { sessions, loading, error, toggleCompletion, deleteSession, setSelectedDate } = useSession();
 
   const [currentMonth, setCurrentMonth] = useState(() => new Date());
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
@@ -61,6 +61,13 @@ export default function CalendarPage() {
       });
     },
     [toggleCompletion]
+  );
+
+  const handleDelete = useCallback(
+    async (id: string) => {
+      await deleteSession(id);
+    },
+    [deleteSession]
   );
 
   if (loading) {
@@ -122,6 +129,7 @@ export default function CalendarPage() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onToggleComplete={handleToggleComplete}
+        onDelete={handleDelete}
       />
     </div>
   );
