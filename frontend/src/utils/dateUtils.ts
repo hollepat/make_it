@@ -145,20 +145,18 @@ export function getDayNumber(date: Date): number {
 }
 
 /**
- * Convert a Date to ISO string (for API)
+ * Convert a Date to a date string for the API.
+ * Uses local date formatting (yyyy-MM-dd) to avoid UTC timezone shifts
+ * that would cause the date to be off by one day for users east of UTC.
  */
 export function toISOString(date: Date, time?: string): string {
+  const dateStr = format(date, 'yyyy-MM-dd');
+
   if (time) {
-    const [hours, minutes] = time.split(':').map(Number);
-    const newDate = new Date(date);
-    newDate.setHours(hours, minutes, 0, 0);
-    return newDate.toISOString();
+    return `${dateStr}T${time}:00`;
   }
 
-  // Set to midnight for "all day" sessions
-  const newDate = new Date(date);
-  newDate.setHours(0, 0, 0, 0);
-  return newDate.toISOString();
+  return dateStr;
 }
 
 /**
