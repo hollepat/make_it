@@ -28,7 +28,7 @@ class Session(
     var user: User? = null,
 
     @Column(name = "program_id", nullable = true)
-    val programId: UUID? = null,
+    var programId: UUID? = null,
 
     @Column(nullable = false, length = 50)
     var type: String,

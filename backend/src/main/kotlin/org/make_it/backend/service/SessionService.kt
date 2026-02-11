@@ -144,6 +144,11 @@ class SessionService(
         request.scheduledDate?.let { session.scheduledDate = it }
         request.notes?.let { session.notes = it.trim().takeIf { note -> note.isNotBlank() } }
         request.durationMinutes?.let { session.durationMinutes = it }
+        if (request.clearProgramId) {
+            session.programId = null
+        } else {
+            request.programId?.let { session.programId = it }
+        }
 
         return sessionRepository.save(session).also {
             logger.info("Updated session {}", id)

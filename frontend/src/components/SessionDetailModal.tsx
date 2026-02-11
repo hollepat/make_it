@@ -3,6 +3,7 @@ import type { Session } from '../types';
 import { getSessionEmoji, getSessionLabel } from '../utils/sessionUtils';
 import { formatSessionDate, formatTime, formatDuration } from '../utils/dateUtils';
 import ConfirmDialog from './ConfirmDialog';
+import { useProgram } from '../context/ProgramContext';
 
 interface SessionDetailModalProps {
   session: Session | null;
@@ -73,6 +74,8 @@ export default function SessionDetailModal({
 }: SessionDetailModalProps) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const { getProgramById } = useProgram();
+  const program = session?.programId ? getProgramById(session.programId) : undefined;
 
   const handleToggleComplete = useCallback(async () => {
     if (session) {
@@ -188,6 +191,21 @@ export default function SessionDetailModal({
                 </p>
               </div>
             </div>
+
+            {/* Program */}
+            {program && (
+              <div className="bg-gray-50 rounded-xl p-3">
+                <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+                  Program
+                </p>
+                <div className="flex items-center gap-2">
+                  <span className="inline-block px-2 py-0.5 bg-teal-100 text-teal-700 text-xs font-medium rounded-full">
+                    {program.tag}
+                  </span>
+                  <span className="text-sm font-medium text-gray-900">{program.name}</span>
+                </div>
+              </div>
+            )}
 
             {/* Notes */}
             {session.notes && (

@@ -13,6 +13,9 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# The ARG instruction allows you to define variables that will be accessible
+# during the build stage but not available after the image is built.
+
 # Build arguments
 ARG VITE_API_URL=http://localhost:8080/api
 ARG VITE_INVITE_CODE_REQUIRED=true

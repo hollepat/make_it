@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSession } from '../context/SessionContext';
+import { useProgram } from '../context/ProgramContext';
 import {
   SESSION_TYPES,
   DURATION_PRESETS,
@@ -14,16 +15,20 @@ import {
 
 interface LocationState {
   selectedDate?: string;
+  programId?: string;
 }
 
 export default function CreateSessionPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { createSession } = useSession();
+  const { programs } = useProgram();
+
+  const locationState = location.state as LocationState | null;
 
   // Get selected date from navigation state or use today
-  const initialDate = (location.state as LocationState)?.selectedDate
-    ? new Date((location.state as LocationState).selectedDate!)
+  const initialDate = locationState?.selectedDate
+    ? new Date(locationState.selectedDate)
     : new Date();
 
   const [sessionType, setSessionType] = useState<SessionType | null>(null);
@@ -31,6 +36,9 @@ export default function CreateSessionPage() {
   const [time, setTime] = useState('');
   const [duration, setDuration] = useState<number | null>(null);
   const [notes, setNotes] = useState('');
+  const [selectedProgramId, setSelectedProgramId] = useState<string | null>(
+    locationState?.programId ?? null
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -54,6 +62,7 @@ export default function CreateSessionPage() {
           scheduledDate,
           notes: notes.trim() || undefined,
           durationMinutes: duration || undefined,
+          programId: selectedProgramId || undefined,
         });
 
         navigate('/');
@@ -64,7 +73,7 @@ export default function CreateSessionPage() {
         setIsSubmitting(false);
       }
     },
-    [sessionType, date, time, duration, notes, createSession, navigate]
+    [sessionType, date, time, duration, notes, selectedProgramId, createSession, navigate]
   );
 
   const handleCancel = useCallback(() => {
@@ -117,6 +126,49 @@ export default function CreateSessionPage() {
                   >
                     {config.label}
                   </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Program Selector */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Program{' '}
+              <span className="text-gray-400 font-normal">(optional)</span>
+            </label>
+            <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4">
+              <button
+                type="button"
+                onClick={() => setSelectedProgramId(null)}
+                className={`
+                  flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium
+                  transition-all duration-200 active:scale-95
+                  ${selectedProgramId === null
+                    ? 'bg-teal-600 text-white shadow-sm'
+                    : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                  }
+                `}
+                aria-pressed={selectedProgramId === null}
+              >
+                None
+              </button>
+              {programs.map((program) => (
+                <button
+                  key={program.id}
+                  type="button"
+                  onClick={() => setSelectedProgramId(program.id)}
+                  className={`
+                    flex-shrink-0 px-4 py-2 rounded-xl text-sm font-medium
+                    transition-all duration-200 active:scale-95 max-w-[200px] truncate
+                    ${selectedProgramId === program.id
+                      ? 'bg-teal-600 text-white shadow-sm'
+                      : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                    }
+                  `}
+                  aria-pressed={selectedProgramId === program.id}
+                >
+                  {program.tag} {program.name}
                 </button>
               ))}
             </div>

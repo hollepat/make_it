@@ -1,0 +1,63 @@
+databaseChangeLog:
+  - changeSet:
+      id: 10
+      author: makeit
+      comment: Add user_id column to programs table
+      changes:
+        - addColumn:
+            tableName: programs
+            columns:
+              - column:
+                  name: user_id
+                  type: uuid
+        - addForeignKeyConstraint:
+            baseTableName: programs
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_programs_user
+            onDelete: CASCADE
+        - createIndex:
+            tableName: programs
+            indexName: idx_programs_user_id
+            columns:
+              - column:
+                  name: user_id
+
+  - changeSet:
+      id: 11
+      author: makeit
+      comment: Add tag column to programs table
+      changes:
+        - addColumn:
+            tableName: programs
+            columns:
+              - column:
+                  name: tag
+                  type: varchar(50)
+                  defaultValue: general
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 12
+      author: makeit
+      comment: Drop NOT NULL on period_type
+      changes:
+        - dropNotNullConstraint:
+            tableName: programs
+            columnName: period_type
+            columnDataType: varchar(50)
+
+  - changeSet:
+      id: 13
+      author: makeit
+      comment: Restore FK from sessions.program_id to programs.id with ON DELETE SET NULL
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: sessions
+            baseColumnNames: program_id
+            referencedTableName: programs
+            referencedColumnNames: id
+            constraintName: fk_sessions_program
+            onDelete: SET NULL

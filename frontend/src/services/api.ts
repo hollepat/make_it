@@ -1,5 +1,5 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
-import type { Session, CreateSessionRequest } from '../types';
+import type { Session, CreateSessionRequest, UpdateSessionRequest } from '../types';
 import {
   getAccessToken,
   getRefreshToken,
@@ -131,6 +131,11 @@ export const sessionApi = {
 
   toggleCompletion: async (id: string): Promise<Session> => {
     const response = await api.patch<Session>(`/sessions/${id}/complete`);
+    return response.data;
+  },
+
+  updateSession: async (id: string, request: UpdateSessionRequest): Promise<Session> => {
+    const response = await api.put<Session>(`/sessions/${id}`, request);
     return response.data;
   },
 

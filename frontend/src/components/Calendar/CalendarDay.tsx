@@ -2,6 +2,7 @@ import { memo } from 'react';
 import type { Session } from '../../types';
 import { getSessionEmoji } from '../../utils/sessionUtils';
 import { formatTime } from '../../utils/dateUtils';
+import { useProgram } from '../../context/ProgramContext';
 
 interface CalendarDayProps {
   date: Date;
@@ -24,6 +25,8 @@ const CalendarDay = memo(function CalendarDay({
   onClick,
   onSessionClick,
 }: CalendarDayProps) {
+  const { getProgramById } = useProgram();
+
   const handleClick = (e: React.MouseEvent) => {
     // If clicking directly on the day cell (not a session)
     if (e.target === e.currentTarget || (e.target as HTMLElement).dataset.dayCell) {
@@ -78,7 +81,9 @@ const CalendarDay = memo(function CalendarDay({
 
       {/* Sessions */}
       <div className="space-y-0.5 overflow-hidden" data-day-cell="true">
-        {visibleSessions.map((session) => (
+        {visibleSessions.map((session) => {
+          const program = session.programId ? getProgramById(session.programId) : undefined;
+          return (
           <button
             key={session.id}
             onClick={(e) => handleSessionClick(e, session)}
@@ -89,6 +94,7 @@ const CalendarDay = memo(function CalendarDay({
                 ? 'bg-green-100 text-green-700 line-through opacity-75'
                 : 'bg-teal-100 text-teal-800 hover:bg-teal-200'
               }
+              ${program ? 'border-l-2 border-l-teal-500' : ''}
             `}
             aria-label={`${session.type} session${session.completed ? ', completed' : ''}`}
           >
@@ -97,7 +103,8 @@ const CalendarDay = memo(function CalendarDay({
               {formatTime(session.scheduledDate) || 'All day'}
             </span>
           </button>
-        ))}
+          );
+        })}
 
         {hasMoreSessions && (
           <div

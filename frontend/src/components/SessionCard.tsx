@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import type { Session } from '../types';
+import { useProgram } from '../context/ProgramContext';
 import {
   getSessionEmoji,
   getSessionLabel,
@@ -72,6 +73,9 @@ const SessionCard = memo(function SessionCard({
   onDelete,
   showRelativeDate = true,
 }: SessionCardProps) {
+  const { getProgramById } = useProgram();
+  const program = session.programId ? getProgramById(session.programId) : undefined;
+
   const time = formatTime(session.scheduledDate);
   const relativeDate = getRelativeDate(session.scheduledDate);
   const formattedDate = formatSessionDate(session.scheduledDate);
@@ -110,6 +114,11 @@ const SessionCard = memo(function SessionCard({
             >
               {getSessionLabel(session.type)}
             </h3>
+            {program && (
+              <span className="inline-block px-2 py-0.5 bg-teal-100 text-teal-700 text-xs font-medium rounded-full">
+                {program.tag}
+              </span>
+            )}
           </div>
 
           {/* Date & Time Row */}

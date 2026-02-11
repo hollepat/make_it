@@ -42,7 +42,11 @@ data class UpdateSessionRequest(
     val notes: String? = null,
 
     @field:Positive(message = "Duration must be positive")
-    val durationMinutes: Int? = null
+    val durationMinutes: Int? = null,
+
+    val programId: UUID? = null,
+
+    val clearProgramId: Boolean = false
 )
 
 /**
