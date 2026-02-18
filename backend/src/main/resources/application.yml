@@ -31,3 +31,14 @@ app:
     required: ${INVITE_CODE_REQUIRED:true}  # Set to false to disable invite code requirement
     bootstrap-code: ${BOOTSTRAP_INVITE_CODE:my-secret-code}
     code-expiration-days: 7
+  ai:
+    provider: ${AI_PROVIDER:claude}
+    api-key: ${ANTHROPIC_API_KEY:}
+    model-name: ${AI_MODEL_NAME:claude-sonnet-4-20250514}
+    temperature: 0.3 # Controls randomness/creativity of the model's responses.
+    max-tokens: 4096
+    memory-max-messages: 50
+    gemini-api-key: ${GEMINI_API_KEY:}
+    gemini-model-name: ${AI_GEMINI_MODEL_NAME:gemini-2.0-flash}
+    einfra-api-key: ${EINFRA_API_KEY:}
+    einfra-model-name: ${AI_EINFRA_MODEL_NAME:deepseek-v3.2}

@@ -36,6 +36,10 @@ services:
       JWT_SECRET: change-me-in-production-this-must-be-at-least-32-characters-long
       INVITE_CODE_REQUIRED: ${INVITE_CODE_REQUIRED:-true}
       BOOTSTRAP_INVITE_CODE: ${BOOTSTRAP_INVITE_CODE:-make-it-first-user}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      AI_PROVIDER: ${AI_PROVIDER:-claude}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      EINFRA_API_KEY: ${EINFRA_API_KEY:-}
     ports:
       - "8080:8080"
     depends_on:

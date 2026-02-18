@@ -21,6 +21,7 @@ repositories {
 }
 
 dependencies {
+    // TODO use libs.versions.toml for version management
     // Spring Boot Starters
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-liquibase")
@@ -36,6 +37,13 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
+
+    // AI Assistant - LangChain4j (core libs, not Spring Boot starter)
+    val langchain4jVersion = "1.0.0-beta3"
+    implementation("dev.langchain4j:langchain4j:$langchain4jVersion")
+    implementation("dev.langchain4j:langchain4j-anthropic:$langchain4jVersion")
+    implementation("dev.langchain4j:langchain4j-google-ai-gemini:$langchain4jVersion")
+    implementation("dev.langchain4j:langchain4j-open-ai:$langchain4jVersion")
 
     // Database Driver
     runtimeOnly("org.postgresql:postgresql")

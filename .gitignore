@@ -19,7 +19,8 @@
 ehthumbs.db
 Thumbs.db
 
-# Docker
+# Docker / Environment
+.env
 .env.local
 .env.*.local
 docker-compose.override.yml

@@ -99,6 +99,22 @@ function FlagIcon() {
   );
 }
 
+function CoachIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-full h-full"
+    >
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </svg>
+  );
+}
+
 function SettingsIcon() {
   return (
     <svg
@@ -123,6 +139,7 @@ export default function BottomNavigation() {
         <NavItem to="/" icon={<CalendarIcon />} label="Calendar" />
         <NavItem to="/programs" icon={<FlagIcon />} label="Programs" />
         <NavItem to="/create" icon={<PlusIcon />} label="Add" />
+        <NavItem to="/assistant" icon={<CoachIcon />} label="Coach" />
         <NavItem to="/upcoming" icon={<ListIcon />} label="Upcoming" />
         <NavItem to="/settings" icon={<SettingsIcon />} label="Settings" />
       </div>

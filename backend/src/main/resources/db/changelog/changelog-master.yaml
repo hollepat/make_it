@@ -13,3 +13,5 @@ databaseChangeLog:
       file: db/changelog/changes/v1.1.3-sessions-user-id.yaml
   - include:
       file: db/changelog/changes/v1.2.0-programs-update.yaml
+  - include:
+      file: db/changelog/changes/v1.3.0-chat-messages-table.yaml

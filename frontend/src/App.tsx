@@ -13,6 +13,7 @@ import InvitesPage from './pages/InvitesPage';
 import ProgramsPage from './pages/ProgramsPage';
 import CreateProgramPage from './pages/CreateProgramPage';
 import ProgramDetailPage from './pages/ProgramDetailPage';
+import AssistantPage from './pages/AssistantPage';
 
 function ProtectedLayout() {
   return (
@@ -30,6 +31,7 @@ function ProtectedLayout() {
               <Route path="/programs/new" element={<CreateProgramPage />} />
               <Route path="/programs/:id" element={<ProgramDetailPage />} />
               <Route path="/programs/:id/edit" element={<CreateProgramPage />} />
+              <Route path="/assistant" element={<AssistantPage />} />
             </Routes>
           </main>
 
