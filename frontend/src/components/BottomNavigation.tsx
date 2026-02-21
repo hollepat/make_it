@@ -115,6 +115,23 @@ function SettingsIcon() {
   );
 }
 
+function ProfileIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-full h-full"
+    >
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  );
+}
+
 export default function BottomNavigation() {
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-area-bottom">
@@ -123,6 +140,7 @@ export default function BottomNavigation() {
         <NavItem to="/programs" icon={<FlagIcon />} label="Programs" />
 <NavItem to="/assistant" icon={<CoachIcon />} label="Coach" />
         <NavItem to="/upcoming" icon={<ListIcon />} label="Upcoming" />
+        <NavItem to="/profile" icon={<ProfileIcon />} label="Profile" />
         <NavItem to="/settings" icon={<SettingsIcon />} label="Settings" />
       </div>
     </nav>

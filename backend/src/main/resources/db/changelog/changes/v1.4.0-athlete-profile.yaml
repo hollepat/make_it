@@ -1,0 +1,76 @@
+databaseChangeLog:
+  - changeSet:
+      id: 15
+      author: makeit
+      comment: Create user_athlete_profile table for personalized coaching context
+      changes:
+        - createTable:
+            tableName: user_athlete_profile
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    unique: true
+                    foreignKeyName: fk_athlete_profile_user
+                    references: users(id)
+                    deleteCascade: true
+              - column:
+                  name: age
+                  type: integer
+              - column:
+                  name: weight_kg
+                  type: decimal(5, 2)
+              - column:
+                  name: height_cm
+                  type: decimal(5, 2)
+              - column:
+                  name: fitness_level
+                  type: varchar(20)
+              - column:
+                  name: primary_sport
+                  type: varchar(50)
+              - column:
+                  name: training_age_years
+                  type: integer
+              - column:
+                  name: max_heart_rate
+                  type: integer
+              - column:
+                  name: resting_heart_rate
+                  type: integer
+              - column:
+                  name: injury_notes
+                  type: text
+              - column:
+                  name: weekly_availability_hours
+                  type: integer
+              - column:
+                  name: goals
+                  type: text
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+        - createIndex:
+            tableName: user_athlete_profile
+            indexName: idx_athlete_profile_user_id
+            unique: true
+            columns:
+              - column:
+                  name: user_id

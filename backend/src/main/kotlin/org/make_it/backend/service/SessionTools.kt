@@ -2,6 +2,7 @@ package org.make_it.backend.service
 
 import dev.langchain4j.agent.tool.Tool
 import org.make_it.backend.dto.CreateSessionRequest
+import org.make_it.backend.dto.UpdateAthleteProfileRequest
 import org.make_it.backend.dto.UpdateSessionRequest
 import org.springframework.stereotype.Component
 import java.time.LocalDate
@@ -28,7 +29,8 @@ object UserContext {
 @Component
 class SessionTools(
     private val sessionService: SessionService,
-    private val programService: ProgramService
+    private val programService: ProgramService,
+    private val athleteProfileService: AthleteProfileService
 ) {
 
     @Tool("Get all training sessions for the user")
@@ -126,6 +128,119 @@ class SessionTools(
             "- ${p.name} (${p.tag}) | ${p.completedSessions}/${p.totalSessions} sessions" +
                 (p.goal?.let { " | Goal: $it" } ?: "") +
                 " [id: ${p.id}]"
+        }
+    }
+
+    @Tool("Get the athlete's profile summary including age, fitness level, injury notes, and training availability")
+    fun getAthleteProfile(): String {
+        val userId = UserContext.get()
+        val profile = athleteProfileService.findByUserId(userId)
+            ?: return "No athlete profile found. Consider asking the user to fill in their profile at /profile."
+
+        val lines = mutableListOf<String>()
+        profile.age?.let { lines += "Age: $it" }
+        profile.fitnessLevel?.let { lines += "Fitness level: $it" }
+        profile.primarySport?.let { lines += "Primary sport: $it" }
+        profile.trainingAgeYears?.let { lines += "Training age: $it years" }
+        profile.weightKg?.let { lines += "Weight: ${it}kg" }
+        profile.heightCm?.let { lines += "Height: ${it}cm" }
+        profile.maxHeartRate?.let { lines += "Max HR: ${it} bpm" }
+            ?: profile.age?.let { lines += "Estimated max HR: ${220 - it} bpm (220 - age)" }
+        profile.restingHeartRate?.let { lines += "Resting HR: ${it} bpm" }
+        profile.weeklyAvailabilityHours?.let { lines += "Weekly availability: ${it}h" }
+        profile.injuryNotes?.let { lines += "Injury notes: $it" }
+        profile.goals?.let { lines += "Goals: $it" }
+
+        return if (lines.isEmpty()) "Athlete profile exists but no details have been filled in yet."
+        else lines.joinToString("\n")
+    }
+
+    @Tool(
+        "Update the athlete's profile. Only non-null parameters will be applied. " +
+        "fitnessLevel must be one of: beginner, intermediate, advanced, elite."
+    )
+    fun updateAthleteProfile(
+        age: Int? = null,
+        fitnessLevel: String? = null,
+        primarySport: String? = null,
+        trainingAgeYears: Int? = null,
+        maxHeartRate: Int? = null,
+        restingHeartRate: Int? = null,
+        injuryNotes: String? = null,
+        weeklyAvailabilityHours: Int? = null,
+        goals: String? = null
+    ): String {
+        val userId = UserContext.get()
+        val request = UpdateAthleteProfileRequest(
+            age = age,
+            fitnessLevel = fitnessLevel,
+            primarySport = primarySport,
+            trainingAgeYears = trainingAgeYears,
+            maxHeartRate = maxHeartRate,
+            restingHeartRate = restingHeartRate,
+            injuryNotes = injuryNotes,
+            weeklyAvailabilityHours = weeklyAvailabilityHours,
+            goals = goals
+        )
+        athleteProfileService.update(userId, request)
+        return "Athlete profile updated successfully."
+    }
+
+    @Tool(
+        "Analyse the user's training history for the past N days. " +
+        "Returns total sessions, hours trained, completion rate, sport breakdown, " +
+        "and the acute:chronic workload ratio (ACWR). " +
+        "ACWR > 1.5 signals overtraining risk; ACWR < 0.8 signals detraining."
+    )
+    fun analyzeTrainingHistory(days: Int = 30): String {
+        val userId = UserContext.get()
+        val today = LocalDate.now()
+        val windowStart = today.minusDays(days.toLong())
+        val acwrStart = today.minusDays(28)
+
+        val allSessions = sessionService.listSessions(userId)
+
+        val windowSessions = allSessions.filter { !it.scheduledDate.isBefore(windowStart) }
+        val totalInWindow = windowSessions.size
+        val completedInWindow = windowSessions.count { it.completed }
+        val completionRate = if (totalInWindow > 0)
+            (completedInWindow * 100.0 / totalInWindow).toInt() else 0
+
+        val hoursInWindow = windowSessions
+            .filter { it.completed }
+            .sumOf { it.durationMinutes ?: 0 } / 60.0
+
+        val sportBreakdown = windowSessions
+            .groupBy { it.type }
+            .map { (type, sessions) ->
+                val done = sessions.count { it.completed }
+                "$type: $done/${sessions.size}"
+            }
+            .joinToString(", ")
+
+        // ACWR: acute (last 7 days) / chronic (avg weekly over last 28 days)
+        val acuteSessions = allSessions.filter {
+            !it.scheduledDate.isBefore(today.minusDays(7)) && it.completed
+        }
+        val acuteHours = acuteSessions.sumOf { it.durationMinutes ?: 0 } / 60.0
+
+        val chronicSessions = allSessions.filter {
+            !it.scheduledDate.isBefore(acwrStart) && it.completed
+        }
+        val chronicHoursPerWeek = chronicSessions.sumOf { it.durationMinutes ?: 0 } / 60.0 / 4.0
+
+        val acwr = if (chronicHoursPerWeek > 0)
+            String.format("%.2f", acuteHours / chronicHoursPerWeek)
+        else "N/A (insufficient history)"
+
+        return buildString {
+            appendLine("Training analysis for past $days days:")
+            appendLine("- Total sessions: $totalInWindow ($completedInWindow completed, $completionRate% completion rate)")
+            appendLine("- Hours trained: ${"%.1f".format(hoursInWindow)}h")
+            if (sportBreakdown.isNotBlank()) appendLine("- By sport: $sportBreakdown")
+            appendLine("- Acute load (last 7d): ${"%.1f".format(acuteHours)}h")
+            appendLine("- Chronic load (avg/week over 28d): ${"%.1f".format(chronicHoursPerWeek)}h")
+            append("- ACWR: $acwr")
         }
     }
 }

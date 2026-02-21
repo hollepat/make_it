@@ -15,3 +15,5 @@ databaseChangeLog:
       file: db/changelog/changes/v1.2.0-programs-update.yaml
   - include:
       file: db/changelog/changes/v1.3.0-chat-messages-table.yaml
+  - include:
+      file: db/changelog/changes/v1.4.0-athlete-profile.yaml
