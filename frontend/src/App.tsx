@@ -15,31 +15,34 @@ import CreateProgramPage from './pages/CreateProgramPage';
 import ProgramDetailPage from './pages/ProgramDetailPage';
 import AssistantPage from './pages/AssistantPage';
 import AthleteProfilePage from './pages/AthleteProfilePage';
+import { AssistantProvider } from './context/AssistantContext';
 
 function ProtectedLayout() {
   return (
     <ProgramProvider>
       <SessionProvider>
-        <div className="flex flex-col h-screen bg-gray-50">
-          {/* Main Content Area */}
-          <main className="flex-1 flex flex-col overflow-hidden pb-14">
-            <Routes>
-              <Route path="/" element={<CalendarPage />} />
-              <Route path="/create" element={<CreateSessionPage />} />
-              <Route path="/upcoming" element={<UpcomingPage />} />
-              <Route path="/settings" element={<InvitesPage />} />
-              <Route path="/programs" element={<ProgramsPage />} />
-              <Route path="/programs/new" element={<CreateProgramPage />} />
-              <Route path="/programs/:id" element={<ProgramDetailPage />} />
-              <Route path="/programs/:id/edit" element={<CreateProgramPage />} />
-              <Route path="/assistant" element={<AssistantPage />} />
-              <Route path="/profile" element={<AthleteProfilePage />} />
-            </Routes>
-          </main>
+        <AssistantProvider>
+          <div className="flex flex-col h-screen bg-gray-50">
+            {/* Main Content Area */}
+            <main className="flex-1 flex flex-col overflow-hidden pb-14">
+              <Routes>
+                <Route path="/" element={<CalendarPage />} />
+                <Route path="/create" element={<CreateSessionPage />} />
+                <Route path="/upcoming" element={<UpcomingPage />} />
+                <Route path="/settings" element={<InvitesPage />} />
+                <Route path="/programs" element={<ProgramsPage />} />
+                <Route path="/programs/new" element={<CreateProgramPage />} />
+                <Route path="/programs/:id" element={<ProgramDetailPage />} />
+                <Route path="/programs/:id/edit" element={<CreateProgramPage />} />
+                <Route path="/assistant" element={<AssistantPage />} />
+                <Route path="/profile" element={<AthleteProfilePage />} />
+              </Routes>
+            </main>
 
-          {/* Bottom Navigation */}
-          <BottomNavigation />
-        </div>
+            {/* Bottom Navigation */}
+            <BottomNavigation />
+          </div>
+        </AssistantProvider>
       </SessionProvider>
     </ProgramProvider>
   );
