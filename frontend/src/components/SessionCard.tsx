@@ -43,7 +43,7 @@ function CheckCircleIcon({ completed }: { completed: boolean }) {
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
-      className="w-6 h-6 text-gray-300"
+      className="w-6 h-6 text-gray-300 dark:text-slate-600"
     >
       <circle cx="12" cy="12" r="9.5" />
     </svg>
@@ -85,7 +85,7 @@ const SessionCard = memo(function SessionCard({
   return (
     <div
       className={`
-        bg-white rounded-xl shadow-sm border border-gray-100 p-4
+        bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-4
         transition-all duration-200 hover:shadow-md
         ${session.completed ? 'opacity-75' : ''}
       `}
@@ -95,7 +95,7 @@ const SessionCard = memo(function SessionCard({
         <button
           onClick={() => onToggleComplete(session.id)}
           className="flex-shrink-0 mt-0.5 p-1 -m-1 rounded-full
-            hover:bg-gray-100 transition-colors active:scale-95"
+            hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors active:scale-95"
           aria-label={
             session.completed ? 'Mark as incomplete' : 'Mark as complete'
           }
@@ -108,7 +108,7 @@ const SessionCard = memo(function SessionCard({
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xl">{getSessionEmoji(session.type)}</span>
             <h3
-              className={`font-semibold text-gray-900 ${
+              className={`font-semibold text-gray-900 dark:text-slate-50 ${
                 session.completed ? 'line-through' : ''
               }`}
             >
@@ -122,26 +122,26 @@ const SessionCard = memo(function SessionCard({
           </div>
 
           {/* Date & Time Row */}
-          <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
+          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-slate-300 mb-1">
             {showRelativeDate ? (
-              <span className="font-medium text-teal-600">{relativeDate}</span>
+              <span className="font-medium text-teal-600 dark:text-teal-400">{relativeDate}</span>
             ) : (
               <span>{formattedDate}</span>
             )}
             {showRelativeDate && relativeDate !== formattedDate && (
               <>
-                <span className="text-gray-300">|</span>
+                <span className="text-gray-300 dark:text-slate-600">|</span>
                 <span>{formattedDate}</span>
               </>
             )}
           </div>
 
           {/* Time & Duration Row */}
-          <div className="flex items-center gap-2 text-sm text-gray-500">
+          <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-slate-400">
             <span>{time || 'All day'}</span>
             {duration && (
               <>
-                <span className="text-gray-300">|</span>
+                <span className="text-gray-300 dark:text-slate-600">|</span>
                 <span>{duration}</span>
               </>
             )}
@@ -149,7 +149,7 @@ const SessionCard = memo(function SessionCard({
 
           {/* Notes Preview */}
           {notesPreview && (
-            <p className="text-sm text-gray-500 mt-2 line-clamp-2">
+            <p className="text-sm text-gray-500 dark:text-slate-400 mt-2 line-clamp-2">
               {notesPreview}
             </p>
           )}
@@ -159,8 +159,8 @@ const SessionCard = memo(function SessionCard({
         {onDelete && (
           <button
             onClick={() => onDelete(session.id)}
-            className="flex-shrink-0 p-2 -m-1 text-gray-300 hover:text-red-500
-              hover:bg-red-50 rounded-full transition-colors"
+            className="flex-shrink-0 p-2 -m-1 text-gray-300 dark:text-slate-600 hover:text-red-500 dark:hover:text-red-400
+              hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors"
             aria-label={`Delete ${getSessionLabel(session.type)} session`}
           >
             <TrashIcon />

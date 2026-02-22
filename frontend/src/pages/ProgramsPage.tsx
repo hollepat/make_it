@@ -14,12 +14,12 @@ function ProgramsPage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 overflow-y-auto">
+    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-slate-950 overflow-y-auto">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-4 flex items-center justify-between">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 px-4 py-4 flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">Programs</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-slate-50">Programs</h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">
             Your training programs
           </p>
         </div>
@@ -37,7 +37,7 @@ function ProgramsPage() {
       </div>
 
       {error && (
-        <div className="mx-4 mt-4 bg-red-50 text-red-700 px-4 py-3 rounded-xl text-sm">
+        <div className="mx-4 mt-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 px-4 py-3 rounded-xl text-sm">
           {error}
         </div>
       )}
@@ -46,12 +46,12 @@ function ProgramsPage() {
         {programs.length === 0 ? (
           <div className="text-center py-12">
             <div className="text-4xl mb-3">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12 mx-auto text-gray-300">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-12 h-12 mx-auto text-gray-300 dark:text-slate-600">
                 <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" strokeLinecap="round" strokeLinejoin="round" />
                 <line x1="4" y1="22" x2="4" y2="15" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
-            <p className="text-gray-500 text-sm">No programs yet</p>
+            <p className="text-gray-500 dark:text-slate-400 text-sm">No programs yet</p>
             <button
               onClick={() => navigate('/programs/new')}
               className="mt-4 px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg
@@ -70,7 +70,7 @@ function ProgramsPage() {
               <button
                 key={program.id}
                 onClick={() => navigate(`/programs/${program.id}`)}
-                className="w-full text-left bg-white rounded-xl shadow-sm border border-gray-100 p-4
+                className="w-full text-left bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 p-4
                   transition-all duration-200 hover:shadow-md active:scale-[0.99]"
               >
                 <div className="flex items-start gap-3">
@@ -80,22 +80,22 @@ function ProgramsPage() {
                         {program.tag}
                       </span>
                     </div>
-                    <h3 className="font-semibold text-gray-900 truncate">
+                    <h3 className="font-semibold text-gray-900 dark:text-slate-50 truncate">
                       {program.name}
                     </h3>
                     {program.goal && (
-                      <p className="text-sm text-gray-500 mt-0.5 line-clamp-2">
+                      <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5 line-clamp-2">
                         {program.goal}
                       </p>
                     )}
 
                     {/* Progress bar */}
                     <div className="mt-3">
-                      <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+                      <div className="flex items-center justify-between text-xs text-gray-500 dark:text-slate-400 mb-1">
                         <span>{program.completedSessions}/{program.totalSessions} sessions</span>
                         <span>{progress}%</span>
                       </div>
-                      <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
                         <div
                           className="h-full bg-teal-500 rounded-full transition-all duration-300"
                           style={{ width: `${progress}%` }}
@@ -105,7 +105,7 @@ function ProgramsPage() {
                   </div>
 
                   {/* Chevron */}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-gray-300 flex-shrink-0 mt-1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-gray-300 dark:text-slate-600 flex-shrink-0 mt-1">
                     <polyline points="9 18 15 12 9 6" />
                   </svg>
                 </div>

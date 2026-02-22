@@ -127,26 +127,26 @@ export default function SessionDetailModal({
         aria-modal="true"
         aria-labelledby="session-detail-title"
       >
-        <div className="w-full sm:max-w-md bg-white rounded-t-2xl sm:rounded-2xl shadow-xl animate-slide-up sm:animate-scale-in">
+        <div className="w-full sm:max-w-md bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-2xl shadow-xl animate-slide-up sm:animate-scale-in">
           {/* Header */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-slate-800">
             <h2
               id="session-detail-title"
-              className="text-lg font-semibold text-gray-900"
+              className="text-lg font-semibold text-gray-900 dark:text-slate-50"
             >
               Session Details
             </h2>
             <div className="flex items-center gap-1">
               <button
                 onClick={handleDeleteClick}
-                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                className="p-2 text-gray-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors"
                 aria-label="Delete session"
               >
                 <TrashIcon />
               </button>
               <button
                 onClick={onClose}
-                className="p-2 -mr-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                className="p-2 -mr-2 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full transition-colors"
                 aria-label="Close"
               >
                 <CloseIcon />
@@ -160,10 +160,10 @@ export default function SessionDetailModal({
             <div className="flex items-center gap-3">
               <span className="text-4xl">{getSessionEmoji(session.type)}</span>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-slate-50">
                   {getSessionLabel(session.type)}
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-slate-400">
                   {formatSessionDate(session.scheduledDate)}
                 </p>
               </div>
@@ -172,21 +172,21 @@ export default function SessionDetailModal({
             {/* Details Grid */}
             <div className="grid grid-cols-2 gap-4">
               {/* Time */}
-              <div className="bg-gray-50 rounded-xl p-3">
-                <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+              <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-3">
+                <p className="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-1">
                   Time
                 </p>
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-sm font-medium text-gray-900 dark:text-slate-50">
                   {time || 'All day'}
                 </p>
               </div>
 
               {/* Duration */}
-              <div className="bg-gray-50 rounded-xl p-3">
-                <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+              <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-3">
+                <p className="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-1">
                   Duration
                 </p>
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-sm font-medium text-gray-900 dark:text-slate-50">
                   {formatDuration(session.durationMinutes) || 'Not set'}
                 </p>
               </div>
@@ -194,26 +194,26 @@ export default function SessionDetailModal({
 
             {/* Program */}
             {program && (
-              <div className="bg-gray-50 rounded-xl p-3">
-                <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+              <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-3">
+                <p className="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-1">
                   Program
                 </p>
                 <div className="flex items-center gap-2">
                   <span className="inline-block px-2 py-0.5 bg-teal-100 text-teal-700 text-xs font-medium rounded-full">
                     {program.tag}
                   </span>
-                  <span className="text-sm font-medium text-gray-900">{program.name}</span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-slate-50">{program.name}</span>
                 </div>
               </div>
             )}
 
             {/* Notes */}
             {session.notes && (
-              <div className="bg-gray-50 rounded-xl p-3">
-                <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+              <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-3">
+                <p className="text-xs text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-1">
                   Notes
                 </p>
-                <p className="text-sm text-gray-900 whitespace-pre-wrap">
+                <p className="text-sm text-gray-900 dark:text-slate-200 whitespace-pre-wrap">
                   {session.notes}
                 </p>
               </div>
@@ -239,7 +239,7 @@ export default function SessionDetailModal({
                 transition-all duration-200 active:scale-[0.98]
                 flex items-center justify-center gap-2
                 ${session.completed
-                  ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700'
                   : 'bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-600/25'
                 }
               `}

@@ -72,10 +72,15 @@ export default function CalendarPage() {
 
   if (loading) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-white">
-        <div className="text-center">
-          <div className="w-8 h-8 border-2 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-          <p className="text-gray-500 text-sm">Loading sessions...</p>
+      <div className="flex-1 flex items-center justify-center bg-gradient-to-b from-teal-50/50 to-white dark:from-slate-950 dark:to-slate-950">
+        <div className="text-center animate-fade-in">
+          <div className="relative w-12 h-12 mx-auto mb-4">
+            <div className="absolute inset-0 rounded-full bg-teal-100 dark:bg-teal-900/30 animate-pulse-subtle" />
+            <div className="absolute inset-1 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center">
+              <div className="w-6 h-6 border-2 border-teal-600 border-t-transparent rounded-full animate-spin" />
+            </div>
+          </div>
+          <p className="text-gray-500 dark:text-slate-400 text-sm font-medium">Loading your calendar...</p>
         </div>
       </div>
     );
@@ -83,32 +88,32 @@ export default function CalendarPage() {
 
   if (error) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-white p-4">
-        <div className="text-center max-w-sm">
-          <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+      <div className="flex-1 flex items-center justify-center bg-white dark:bg-slate-950 p-4">
+        <div className="text-center max-w-sm animate-fade-in">
+          <div className="w-14 h-14 bg-red-50 dark:bg-red-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
             <svg
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
-              className="w-6 h-6 text-red-600"
+              strokeWidth="1.5"
+              className="w-7 h-7 text-red-500"
             >
               <circle cx="12" cy="12" r="10" />
               <line x1="12" y1="8" x2="12" y2="12" />
               <line x1="12" y1="16" x2="12.01" y2="16" />
             </svg>
           </div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-1">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-slate-50 mb-1">
             Failed to load sessions
           </h2>
-          <p className="text-gray-500 text-sm">{error}</p>
+          <p className="text-gray-500 dark:text-slate-400 text-sm">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-white overflow-hidden">
+    <div className="flex-1 flex flex-col bg-gray-50/30 dark:bg-slate-950 overflow-hidden">
       <CalendarHeader
         currentMonth={currentMonth}
         onPreviousMonth={handlePreviousMonth}

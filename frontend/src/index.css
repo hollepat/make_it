@@ -152,6 +152,148 @@
       opacity: 0.7;
     }
   }
+
+  /* Month transition slide */
+  .animate-month-enter {
+    animation: monthEnter 0.3s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+
+  @keyframes monthEnter {
+    from {
+      opacity: 0;
+      transform: translateX(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Glow pulse for today indicator */
+  .animate-today-glow {
+    animation: todayGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes todayGlow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 12px 4px rgba(13, 148, 136, 0.15);
+    }
+  }
+
+  /* Typing indicator dot glow */
+  .animate-dot-bounce {
+    animation: dotBounce 1.4s ease-in-out infinite;
+  }
+
+  @keyframes dotBounce {
+    0%, 80%, 100% {
+      transform: scale(0.6);
+      opacity: 0.4;
+    }
+    40% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Message appear */
+  .animate-message-in {
+    animation: messageIn 0.35s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+
+  @keyframes messageIn {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Suggestion card hover lift */
+  .animate-suggestion-hover {
+    transition: transform 0.2s cubic-bezier(0.32, 0.72, 0, 1),
+                box-shadow 0.2s ease;
+  }
+
+  .animate-suggestion-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px -5px rgba(13, 148, 136, 0.15),
+                0 4px 10px -5px rgba(0, 0, 0, 0.05);
+  }
+
+  .animate-suggestion-hover:active {
+    transform: translateY(0);
+  }
+}
+
+/* Frosted glass effect */
+.glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.glass-teal {
+  background: linear-gradient(
+    135deg,
+    rgba(240, 253, 250, 0.85) 0%,
+    rgba(204, 251, 241, 0.65) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.glass-dark {
+  background: rgba(15, 118, 110, 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Gradient backgrounds */
+.gradient-teal {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #115e59 100%);
+}
+
+.gradient-teal-subtle {
+  background: linear-gradient(
+    180deg,
+    rgba(240, 253, 250, 1) 0%,
+    rgba(204, 251, 241, 0.3) 100%
+  );
+}
+
+.dark .gradient-teal-subtle {
+  background: linear-gradient(
+    180deg,
+    rgba(13, 148, 136, 0.1) 0%,
+    rgba(13, 148, 136, 0.03) 100%
+  );
+}
+
+.gradient-send-btn {
+  background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+  box-shadow: 0 4px 14px -2px rgba(13, 148, 136, 0.4);
+}
+
+.gradient-send-btn:hover {
+  background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+  box-shadow: 0 6px 20px -2px rgba(13, 148, 136, 0.5);
+}
+
+.gradient-user-bubble {
+  background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
 }
 
 /* Input styles for better mobile experience */

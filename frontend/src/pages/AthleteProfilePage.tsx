@@ -127,19 +127,19 @@ export default function AthleteProfilePage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 overflow-y-auto">
+    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-slate-950 overflow-y-auto">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between flex-shrink-0">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 px-4 py-3 flex items-center justify-between flex-shrink-0">
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">Athlete Profile</h1>
-          <p className="text-xs text-gray-500">Your coach uses this to personalise training plans</p>
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-slate-50">Athlete Profile</h1>
+          <p className="text-xs text-gray-500 dark:text-slate-400">Your coach uses this to personalise training plans</p>
         </div>
         {!isEditing && (
           <button
             type="button"
             onClick={handleEdit}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-teal-600
-              border border-teal-200 rounded-xl hover:bg-teal-50 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-teal-600 dark:text-teal-400
+              border border-teal-200 dark:border-teal-800 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/30 transition-colors"
           >
             <EditIcon />
             Edit
@@ -151,8 +151,8 @@ export default function AthleteProfilePage() {
 
         {/* Basics */}
         <section>
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Basics</h2>
-          <div className="bg-white rounded-2xl border border-gray-200 divide-y divide-gray-100">
+          <h2 className="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">Basics</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 divide-y divide-gray-100 dark:divide-slate-800">
 
             <FieldRow label="Age" hint="years">
               <input
@@ -186,8 +186,8 @@ export default function AthleteProfilePage() {
 
         {/* Training background */}
         <section>
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Training background</h2>
-          <div className="bg-white rounded-2xl border border-gray-200 divide-y divide-gray-100">
+          <h2 className="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">Training background</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 divide-y divide-gray-100 dark:divide-slate-800">
 
             <FieldRow label="Fitness level">
               <select
@@ -234,8 +234,8 @@ export default function AthleteProfilePage() {
 
         {/* Heart rate */}
         <section>
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Heart rate</h2>
-          <div className="bg-white rounded-2xl border border-gray-200 divide-y divide-gray-100">
+          <h2 className="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">Heart rate</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 divide-y divide-gray-100 dark:divide-slate-800">
 
             <FieldRow label="Resting HR" hint="bpm — morning measurement">
               <input
@@ -260,28 +260,28 @@ export default function AthleteProfilePage() {
 
         {/* Goals & injuries */}
         <section>
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Goals & limitations</h2>
-          <div className="bg-white rounded-2xl border border-gray-200 divide-y divide-gray-100">
+          <h2 className="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">Goals & limitations</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 divide-y divide-gray-100 dark:divide-slate-800">
 
             <div className="px-4 py-3">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Goals</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Goals</label>
               <textarea
                 name="goals" value={form.goals} onChange={handleChange}
                 placeholder="e.g. Run a half marathon in under 2 hours"
                 rows={3}
                 disabled={!isEditing}
-                className={`w-full text-sm border-0 focus:outline-none focus:ring-0 resize-none placeholder-gray-400 bg-transparent ${isEditing ? 'text-gray-900' : 'text-gray-600'}`}
+                className={`w-full text-sm border-0 focus:outline-none focus:ring-0 resize-none placeholder-gray-400 dark:placeholder-slate-400 bg-transparent ${isEditing ? 'text-gray-900 dark:text-slate-50' : 'text-gray-600 dark:text-slate-300'}`}
               />
             </div>
 
             <div className="px-4 py-3">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Injury notes</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Injury notes</label>
               <textarea
                 name="injuryNotes" value={form.injuryNotes} onChange={handleChange}
                 placeholder="e.g. Left knee tendonitis — avoid long downhill runs"
                 rows={3}
                 disabled={!isEditing}
-                className={`w-full text-sm border-0 focus:outline-none focus:ring-0 resize-none placeholder-gray-400 bg-transparent ${isEditing ? 'text-gray-900' : 'text-gray-600'}`}
+                className={`w-full text-sm border-0 focus:outline-none focus:ring-0 resize-none placeholder-gray-400 dark:placeholder-slate-400 bg-transparent ${isEditing ? 'text-gray-900 dark:text-slate-50' : 'text-gray-600 dark:text-slate-300'}`}
               />
             </div>
 
@@ -290,7 +290,7 @@ export default function AthleteProfilePage() {
 
         {/* Error feedback */}
         {error && (
-          <div className="bg-red-50 text-red-700 px-4 py-3 rounded-xl text-sm">{error}</div>
+          <div className="bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 px-4 py-3 rounded-xl text-sm">{error}</div>
         )}
 
         {/* Action buttons — only shown in edit mode */}
@@ -299,8 +299,8 @@ export default function AthleteProfilePage() {
             <button
               type="button"
               onClick={handleCancel}
-              className="flex-1 py-3 border border-gray-300 text-gray-700 font-medium rounded-2xl
-                hover:bg-gray-50 active:scale-[0.98] transition-all duration-200"
+              className="flex-1 py-3 border border-gray-300 dark:border-slate-700 text-gray-700 dark:text-slate-300 font-medium rounded-2xl
+                hover:bg-gray-50 dark:hover:bg-slate-800 active:scale-[0.98] transition-all duration-200"
             >
               Cancel
             </button>
@@ -325,8 +325,8 @@ export default function AthleteProfilePage() {
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
 function inputClass(isEditing: boolean) {
-  return `w-full text-sm border-0 focus:outline-none focus:ring-0 bg-transparent placeholder-gray-400 ${
-    isEditing ? 'text-gray-900' : 'text-gray-600'
+  return `w-full text-sm border-0 focus:outline-none focus:ring-0 bg-transparent placeholder-gray-400 dark:placeholder-slate-400 ${
+    isEditing ? 'text-gray-900 dark:text-slate-50' : 'text-gray-600 dark:text-slate-300'
   }`;
 }
 
@@ -352,8 +352,8 @@ function FieldRow({
   return (
     <div className="flex items-center px-4 py-3 gap-3">
       <div className="flex-1 min-w-0">
-        <span className="text-sm font-medium text-gray-700">{label}</span>
-        {hint && <span className="ml-1 text-xs text-gray-400">({hint})</span>}
+        <span className="text-sm font-medium text-gray-700 dark:text-slate-300">{label}</span>
+        {hint && <span className="ml-1 text-xs text-gray-400 dark:text-slate-500">({hint})</span>}
       </div>
       <div className="w-40 text-right">{children}</div>
     </div>

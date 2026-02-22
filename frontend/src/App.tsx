@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { SessionProvider } from './context/SessionContext';
 import { ProgramProvider } from './context/ProgramContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -22,7 +23,7 @@ function ProtectedLayout() {
     <ProgramProvider>
       <SessionProvider>
         <AssistantProvider>
-          <div className="flex flex-col h-screen bg-gray-50">
+          <div className="flex flex-col h-screen bg-gray-50 dark:bg-slate-950">
             {/* Main Content Area */}
             <main className="flex-1 flex flex-col overflow-hidden pb-14">
               <Routes>
@@ -50,6 +51,7 @@ function ProtectedLayout() {
 
 function App() {
   return (
+    <ThemeProvider>
     <BrowserRouter>
       <AuthProvider>
         <Routes>
@@ -69,6 +71,7 @@ function App() {
         </Routes>
       </AuthProvider>
     </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

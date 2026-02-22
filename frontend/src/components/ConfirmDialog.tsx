@@ -84,7 +84,7 @@ export default function ConfirmDialog({
       aria-labelledby="confirm-dialog-title"
       aria-describedby="confirm-dialog-message"
     >
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl animate-scale-in">
+      <div className="w-full max-w-sm bg-white dark:bg-slate-900 rounded-2xl shadow-xl animate-scale-in">
         <div className="p-5 text-center">
           <div
             className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 ${isDanger ? 'bg-red-100 text-red-600' : 'bg-teal-100 text-teal-600'}`}
@@ -94,14 +94,14 @@ export default function ConfirmDialog({
 
           <h2
             id="confirm-dialog-title"
-            className="text-lg font-semibold text-gray-900 mb-2"
+            className="text-lg font-semibold text-gray-900 dark:text-slate-50 mb-2"
           >
             {title}
           </h2>
 
           <p
             id="confirm-dialog-message"
-            className="text-sm text-gray-500 mb-6"
+            className="text-sm text-gray-500 dark:text-slate-400 mb-6"
           >
             {message}
           </p>
@@ -111,7 +111,7 @@ export default function ConfirmDialog({
               ref={cancelButtonRef}
               onClick={onCancel}
               disabled={isLoading}
-              className="flex-1 py-2.5 px-4 rounded-xl font-medium text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors disabled:opacity-50"
+              className="flex-1 py-2.5 px-4 rounded-xl font-medium text-sm bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
             >
               {cancelLabel}
             </button>

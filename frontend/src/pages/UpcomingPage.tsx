@@ -67,10 +67,10 @@ export default function UpcomingPage() {
 
   if (loading && !isRefreshing) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-gray-50">
+      <div className="flex-1 flex items-center justify-center bg-gray-50 dark:bg-slate-950">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-          <p className="text-gray-500 text-sm">Loading sessions...</p>
+          <p className="text-gray-500 dark:text-slate-400 text-sm">Loading sessions...</p>
         </div>
       </div>
     );
@@ -78,9 +78,9 @@ export default function UpcomingPage() {
 
   if (error) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-gray-50 p-4">
+      <div className="flex-1 flex items-center justify-center bg-gray-50 dark:bg-slate-950 p-4">
         <div className="text-center max-w-sm">
-          <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <div className="w-12 h-12 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-3">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -93,10 +93,10 @@ export default function UpcomingPage() {
               <line x1="12" y1="16" x2="12.01" y2="16" />
             </svg>
           </div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-1">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-slate-50 mb-1">
             Failed to load sessions
           </h2>
-          <p className="text-gray-500 text-sm mb-4">{error}</p>
+          <p className="text-gray-500 dark:text-slate-400 text-sm mb-4">{error}</p>
           <button
             onClick={handleRefresh}
             className="px-4 py-2 bg-teal-600 text-white rounded-lg font-medium hover:bg-teal-700 transition-colors"
@@ -109,12 +109,12 @@ export default function UpcomingPage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 overflow-hidden">
+    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-slate-950 overflow-hidden">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-4 flex items-center justify-between">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 px-4 py-4 flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">Upcoming</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-slate-50">Upcoming</h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">
             {upcomingSessions.length} session
             {upcomingSessions.length !== 1 ? 's' : ''} scheduled
           </p>
@@ -124,7 +124,7 @@ export default function UpcomingPage() {
         <button
           onClick={handleRefresh}
           disabled={isRefreshing}
-          className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+          className="p-2 text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors disabled:opacity-50"
           aria-label="Refresh sessions"
         >
           <svg
@@ -147,13 +147,13 @@ export default function UpcomingPage() {
       <div className="flex-1 overflow-y-auto">
         {upcomingSessions.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+            <div className="w-16 h-16 bg-gray-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
-                className="w-8 h-8 text-gray-400"
+                className="w-8 h-8 text-gray-400 dark:text-slate-500"
               >
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                 <line x1="16" y1="2" x2="16" y2="6" />
@@ -162,10 +162,10 @@ export default function UpcomingPage() {
                 <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" />
               </svg>
             </div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-1">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-slate-50 mb-1">
               No upcoming sessions
             </h2>
-            <p className="text-gray-500 text-sm max-w-xs">
+            <p className="text-gray-500 dark:text-slate-400 text-sm max-w-xs">
               You don't have any upcoming sessions scheduled. Tap the + button
               to create one.
             </p>

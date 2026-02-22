@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import { inviteApi } from '../services/inviteApi';
 import type { InviteCode } from '../types/auth';
 
@@ -48,6 +49,7 @@ function getStatusLabel(status: 'used' | 'expired' | 'active'): string {
 export default function InvitesPage() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { mode, setMode } = useTheme();
 
   const [invites, setInvites] = useState<InviteCode[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -118,19 +120,19 @@ export default function InvitesPage() {
   }, [logout, navigate]);
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 overflow-y-auto">
+    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-slate-950 overflow-y-auto">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-4">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 px-4 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold text-gray-900">Settings</h1>
-            <p className="text-sm text-gray-500 mt-0.5">
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-slate-50">Settings</h1>
+            <p className="text-sm text-gray-500 dark:text-slate-400 mt-0.5">
               {user?.displayName} ({user?.email})
             </p>
           </div>
           <button
             onClick={handleLogout}
-            className="text-sm text-red-600 hover:text-red-700 font-medium"
+            className="text-sm text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300/90 font-medium"
           >
             Sign Out
           </button>
@@ -138,10 +140,42 @@ export default function InvitesPage() {
       </div>
 
       <div className="flex-1 p-4 space-y-6">
+        {/* Appearance Section */}
+        <section>
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-slate-50">Appearance</h2>
+            <div className="flex rounded-lg overflow-hidden border border-gray-200 dark:border-slate-700">
+              {(
+                [
+                  { value: 'light', label: 'Light', icon: '☀️' },
+                  { value: 'dark', label: 'Dark', icon: '🌙' },
+                  { value: 'system', label: 'System', icon: '⚙️' },
+                ] as const
+              ).map(({ value, label, icon }) => (
+                <button
+                  key={value}
+                  onClick={() => setMode(value)}
+                  className={`
+                    flex items-center gap-1 px-3 py-1.5 text-xs font-medium
+                    transition-all duration-150
+                    ${mode === value
+                      ? 'bg-teal-600 text-white'
+                      : 'bg-gray-50 dark:bg-slate-800 text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-700'
+                    }
+                  `}
+                >
+                  <span>{icon}</span>
+                  <span>{label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Invite Codes Section */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Invite Codes</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-slate-50">Invite Codes</h2>
             <button
               onClick={handleCreateInvite}
               disabled={isCreating}
@@ -195,7 +229,7 @@ export default function InvitesPage() {
             </div>
           ) : invites.length === 0 ? (
             /* Empty State */
-            <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-8 text-center">
               <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-6 h-6 text-gray-400"
@@ -211,8 +245,8 @@ export default function InvitesPage() {
                   />
                 </svg>
               </div>
-              <p className="text-gray-600 mb-2">No invite codes yet</p>
-              <p className="text-sm text-gray-500">
+              <p className="text-gray-600 dark:text-slate-300 mb-2">No invite codes yet</p>
+              <p className="text-sm text-gray-500 dark:text-slate-500">
                 Create an invite code to share with friends
               </p>
             </div>
@@ -226,13 +260,13 @@ export default function InvitesPage() {
                 return (
                   <div
                     key={invite.id}
-                    className="bg-white rounded-xl border border-gray-200 p-4"
+                    className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-800 p-4"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         {/* Code */}
                         <div className="flex items-center gap-2 mb-2">
-                          <code className="text-sm font-mono bg-gray-100 px-2 py-1 rounded">
+                          <code className="text-sm font-mono bg-gray-100 dark:bg-slate-800 dark:text-slate-200 px-2 py-1 rounded">
                             {invite.code}
                           </code>
                           <span
@@ -245,7 +279,7 @@ export default function InvitesPage() {
                         </div>
 
                         {/* Details */}
-                        <div className="text-xs text-gray-500 space-y-0.5">
+                        <div className="text-xs text-gray-500 dark:text-slate-400 space-y-0.5">
                           <p>Created: {formatDate(invite.createdAt)}</p>
                           <p>Expires: {formatDate(invite.expiresAt)}</p>
                           {invite.usedByEmail && (

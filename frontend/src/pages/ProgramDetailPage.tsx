@@ -67,7 +67,7 @@ export default function ProgramDetailPage() {
     return (
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-500">Program not found</p>
+          <p className="text-gray-500 dark:text-slate-400">Program not found</p>
           <button
             onClick={() => navigate('/programs')}
             className="mt-4 px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg"
@@ -84,13 +84,13 @@ export default function ProgramDetailPage() {
     : 0;
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 overflow-y-auto">
+    <div className="flex-1 flex flex-col bg-gray-50 dark:bg-slate-950 overflow-y-auto">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-4">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 px-4 py-4">
         <div className="flex items-center gap-3 mb-3">
           <button
             onClick={() => navigate('/programs')}
-            className="p-1 -ml-1 text-gray-500 hover:text-gray-700 transition-colors"
+            className="p-1 -ml-1 text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 transition-colors"
             aria-label="Back to programs"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -103,14 +103,14 @@ export default function ProgramDetailPage() {
                 {program.tag}
               </span>
             </div>
-            <h1 className="text-xl font-semibold text-gray-900 truncate">
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-slate-50 truncate">
               {program.name}
             </h1>
           </div>
           <div className="flex items-center gap-1">
             <button
               onClick={() => navigate(`/programs/${id}/edit`)}
-              className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full transition-colors"
               aria-label="Edit program"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -120,7 +120,7 @@ export default function ProgramDetailPage() {
             </button>
             <button
               onClick={() => setShowDeleteConfirm(true)}
-              className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
+              className="p-2 text-gray-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors"
               aria-label="Delete program"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -132,16 +132,16 @@ export default function ProgramDetailPage() {
         </div>
 
         {program.goal && (
-          <p className="text-sm text-gray-600 mb-3">{program.goal}</p>
+          <p className="text-sm text-gray-600 dark:text-slate-300 mb-3">{program.goal}</p>
         )}
 
         {/* Progress */}
         <div>
-          <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+          <div className="flex items-center justify-between text-xs text-gray-500 dark:text-slate-400 mb-1">
             <span>{program.completedSessions}/{program.totalSessions} sessions completed</span>
             <span>{progress}%</span>
           </div>
-          <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div className="h-2 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
             <div
               className="h-full bg-teal-500 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
@@ -153,7 +153,7 @@ export default function ProgramDetailPage() {
       {/* Sessions */}
       <div className="p-4">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">Sessions</h2>
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-slate-300 uppercase tracking-wide">Sessions</h2>
           <button
             onClick={() => navigate('/create', { state: { programId: id } })}
             className="px-3 py-1.5 bg-teal-600 text-white text-sm font-medium rounded-lg
@@ -169,7 +169,7 @@ export default function ProgramDetailPage() {
           </div>
         ) : programSessions.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-gray-500 text-sm">No sessions in this program yet</p>
+            <p className="text-gray-500 dark:text-slate-400 text-sm">No sessions in this program yet</p>
             <button
               onClick={() => navigate('/create', { state: { programId: id } })}
               className="mt-3 px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg

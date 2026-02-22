@@ -35,17 +35,34 @@ function NewChatIcon() {
   );
 }
 
+function SparkleIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className || 'w-4 h-4'}>
+      <path d="M12 2L14.09 8.26L20 9.27L15.55 13.97L16.91 20L12 16.9L7.09 20L8.45 13.97L4 9.27L9.91 8.26L12 2Z" />
+    </svg>
+  );
+}
+
 function TypingIndicator() {
   return (
-    <div className="flex items-start gap-2 animate-fade-in">
-      <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
+    <div className="flex items-start gap-3 animate-message-in">
+      <div className="w-8 h-8 rounded-full gradient-teal flex items-center justify-center flex-shrink-0 shadow-md shadow-teal-600/20">
         <span className="text-sm">🏋️</span>
       </div>
-      <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-sm px-4 py-3">
-        <div className="flex gap-1">
-          <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-          <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-          <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm">
+        <div className="flex gap-1.5 items-center">
+          <span
+            className="w-2 h-2 bg-teal-500 rounded-full animate-dot-bounce"
+            style={{ animationDelay: '0ms' }}
+          />
+          <span
+            className="w-2 h-2 bg-teal-400 rounded-full animate-dot-bounce"
+            style={{ animationDelay: '200ms' }}
+          />
+          <span
+            className="w-2 h-2 bg-teal-300 rounded-full animate-dot-bounce"
+            style={{ animationDelay: '400ms' }}
+          />
         </div>
       </div>
     </div>
@@ -97,22 +114,42 @@ export default function AssistantPage() {
   );
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50 overflow-hidden">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between flex-shrink-0">
-        <div>
-          <h1 className="text-xl font-semibold text-gray-900">Coach</h1>
-          <p className="text-xs text-gray-500">AI fitness assistant</p>
+    <div className="flex-1 flex flex-col bg-gray-50/50 dark:bg-slate-950 overflow-hidden">
+      {/* Header with gradient personality */}
+      <div className="relative px-5 py-4 flex items-center justify-between flex-shrink-0 overflow-hidden">
+        {/* Gradient background */}
+        <div className="absolute inset-0 gradient-teal" />
+        {/* Subtle texture overlay */}
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2) 0%, transparent 40%)',
+          }}
+        />
+        {/* Bottom edge soft blend */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-teal-800/10" />
+
+        <div className="relative flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+            <span className="text-xl">🏋️</span>
+          </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <h1 className="text-xl font-bold text-white">Coach</h1>
+              <SparkleIcon className="w-4 h-4 text-teal-200" />
+            </div>
+            <p className="text-xs text-teal-100/80 font-medium">AI fitness assistant</p>
+          </div>
         </div>
         {messages.length > 0 && (
           <button
             onClick={clearHistory}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-teal-700 hover:bg-teal-50 rounded-full transition-colors"
+            className="relative flex items-center gap-1.5 px-3 py-1.5 text-sm text-white/90 hover:text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-all duration-200 active:scale-95"
             aria-label="Start new conversation"
             title="Start new conversation"
           >
             <NewChatIcon />
-            <span className="text-xs font-medium">New chat</span>
+            <span className="text-xs font-medium">New</span>
           </button>
         )}
       </div>
@@ -122,31 +159,39 @@ export default function AssistantPage() {
         {messages.length === 0 && !isLoading ? (
           /* Empty State */
           <div className="flex-1 flex items-center justify-center h-full">
-            <div className="text-center max-w-sm px-4">
-              <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🏋️</span>
+            <div className="text-center max-w-sm px-4 animate-fade-in">
+              {/* Large avatar area with glow */}
+              <div className="relative w-20 h-20 mx-auto mb-5">
+                <div className="absolute inset-0 rounded-full bg-teal-200/40 blur-xl" />
+                <div className="relative w-20 h-20 rounded-full gradient-teal flex items-center justify-center shadow-lg shadow-teal-600/25">
+                  <span className="text-4xl">🏋️</span>
+                </div>
               </div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-2">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-slate-50 mb-2">
                 Your Fitness Coach
               </h2>
-              <p className="text-sm text-gray-500 mb-6">
-                I can help you plan workouts, create training sessions, and track your progress. Try asking me something!
+              <p className="text-sm text-gray-500 dark:text-slate-400 mb-8 leading-relaxed">
+                Plan workouts, create training sessions, and track your progress.
+                Ask me anything to get started.
               </p>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {[
-                  'Create a 3-day running plan for next week',
-                  'What sessions do I have coming up?',
-                  'Add a gym session for tomorrow',
+                  { text: 'Create a 3-day running plan for next week', icon: '🏃' },
+                  { text: 'What sessions do I have coming up?', icon: '📅' },
+                  { text: 'Add a gym session for tomorrow', icon: '💪' },
                 ].map((suggestion) => (
                   <button
-                    key={suggestion}
+                    key={suggestion.text}
                     onClick={() => {
-                      setInput(suggestion);
+                      setInput(suggestion.text);
                       textareaRef.current?.focus();
                     }}
-                    className="w-full text-left px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-teal-300 hover:bg-teal-50 transition-colors"
+                    className="animate-suggestion-hover w-full text-left px-4 py-3.5 bg-white dark:bg-slate-900 rounded-2xl text-sm text-gray-700 dark:text-slate-300 shadow-sm shadow-gray-200/50 dark:shadow-none flex items-center gap-3 group"
                   >
-                    {suggestion}
+                    <span className="w-9 h-9 rounded-xl bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center flex-shrink-0 text-base group-hover:bg-teal-100 dark:group-hover:bg-teal-900/50 transition-colors">
+                      {suggestion.icon}
+                    </span>
+                    <span className="font-medium">{suggestion.text}</span>
                   </button>
                 ))}
               </div>
@@ -158,23 +203,23 @@ export default function AssistantPage() {
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex items-start gap-2 animate-fade-in ${
+                className={`flex items-start gap-2.5 animate-message-in ${
                   message.role === 'user' ? 'flex-row-reverse' : ''
                 }`}
               >
                 {/* Avatar */}
                 {message.role === 'assistant' && (
-                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full gradient-teal flex items-center justify-center flex-shrink-0 shadow-sm shadow-teal-600/20">
                     <span className="text-sm">🏋️</span>
                   </div>
                 )}
 
                 {/* Bubble */}
                 <div
-                  className={`max-w-[85%] px-4 py-3 text-sm whitespace-pre-wrap break-words ${
+                  className={`max-w-[85%] px-4 py-3 text-sm whitespace-pre-wrap break-words leading-relaxed ${
                     message.role === 'user'
-                      ? 'bg-teal-600 text-white rounded-2xl rounded-tr-sm'
-                      : 'bg-white border border-gray-200 text-gray-900 rounded-2xl rounded-tl-sm'
+                      ? 'gradient-user-bubble text-white rounded-2xl rounded-tr-sm shadow-md shadow-teal-600/15'
+                      : 'bg-white dark:bg-slate-800 text-gray-800 dark:text-slate-200 rounded-2xl rounded-tl-sm shadow-sm'
                   }`}
                 >
                   {message.content}
@@ -188,7 +233,7 @@ export default function AssistantPage() {
             {/* Error */}
             {error && (
               <div className="flex justify-center animate-fade-in">
-                <div className="bg-red-50 text-red-700 px-4 py-2 rounded-xl text-sm">
+                <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-4 py-2.5 rounded-2xl text-sm font-medium shadow-sm">
                   {error}
                 </div>
               </div>
@@ -199,30 +244,37 @@ export default function AssistantPage() {
         )}
       </div>
 
-      {/* Input Area */}
-      <div className="bg-white border-t border-gray-200 px-4 py-3 flex-shrink-0">
-        <div className="max-w-2xl mx-auto flex items-end gap-2">
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            placeholder="Ask your coach..."
-            rows={1}
-            disabled={isLoading}
-            className="flex-1 px-4 py-3 text-sm border border-gray-300 rounded-2xl
-              focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent
-              bg-gray-50 resize-none transition-shadow disabled:opacity-50"
-            style={{ maxHeight: '120px' }}
-          />
+      {/* Input Area - frosted glass */}
+      <div className="glass border-t border-gray-200/50 dark:border-slate-700/50 px-4 py-3 flex-shrink-0">
+        <div className="max-w-2xl mx-auto flex items-end gap-2.5">
+          <div className="flex-1 relative">
+            <textarea
+              ref={textareaRef}
+              value={input}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              placeholder="Ask your coach..."
+              rows={1}
+              disabled={isLoading}
+              className="w-full px-4 py-3 text-sm rounded-2xl
+                bg-white/70 dark:bg-slate-800 backdrop-blur-sm border border-gray-200/60 dark:border-slate-700
+                focus:outline-none focus:ring-2 focus:ring-teal-500/40 dark:focus:ring-teal-400/40 focus:border-teal-300 dark:focus:border-teal-400
+                focus:bg-white dark:focus:bg-slate-800
+                placeholder:text-gray-400 dark:placeholder:text-slate-400
+                dark:text-slate-50
+                resize-none transition-all duration-200 disabled:opacity-50
+                shadow-sm"
+              style={{ maxHeight: '120px' }}
+            />
+          </div>
           <button
             onClick={handleSend}
             disabled={!input.trim() || isLoading}
             className={`
-              p-3 rounded-full transition-all duration-200 active:scale-95 flex-shrink-0
+              p-3 rounded-full transition-all duration-200 active:scale-90 flex-shrink-0
               ${input.trim() && !isLoading
-                ? 'bg-teal-600 text-white hover:bg-teal-700 shadow-lg shadow-teal-600/25'
-                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                ? 'gradient-send-btn text-white'
+                : 'bg-gray-100 dark:bg-slate-800 text-gray-400 dark:text-slate-500 cursor-not-allowed shadow-none'
               }
             `}
             aria-label="Send message"
